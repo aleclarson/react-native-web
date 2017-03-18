@@ -1,3 +1,7 @@
+/**
+ * @providesModule TextInput
+ */
+
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import NativeMethodsMixin from '../../modules/NativeMethodsMixin';

@@ -1,3 +1,7 @@
+/**
+ * @providesModule UIManager
+ */
+
 import asap from 'asap';
 import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
 

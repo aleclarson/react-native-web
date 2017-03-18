@@ -1,3 +1,7 @@
+/**
+ * @providesModule View
+ */
+
 import '../../modules/injectResponderEventPlugin';
 
 import applyLayout from '../../modules/applyLayout';

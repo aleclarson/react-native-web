@@ -1,4 +1,7 @@
-/* global window */
+/**
+ * @providesModule Image
+ */
+
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createDOMElement from '../../modules/createDOMElement';
 import ImageResizeMode from './ImageResizeMode';

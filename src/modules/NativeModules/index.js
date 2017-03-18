@@ -1,2 +1,6 @@
-// NativeModules shim
+/**
+ * @providesModule NativeModules
+ */
+
+// shim
 module.exports = {};

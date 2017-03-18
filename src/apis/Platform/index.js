@@ -1,3 +1,7 @@
+/**
+ * @providesModule Platform
+ */
+
 const Platform = {
   OS: 'web',
   select: (obj: Object) => obj.web
