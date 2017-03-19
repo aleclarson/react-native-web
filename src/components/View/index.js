@@ -2,8 +2,6 @@
  * @providesModule View
  */
 
-import '../../modules/injectResponderEventPlugin';
-
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createDOMElement from '../../modules/createDOMElement';
