@@ -13,7 +13,7 @@
 'use strict';
 
 var Dimensions = require('../../apis/Dimensions');
-var findNodeHandle = require('../findNodeHandle');
+var findNodeHandle = require('react/lib/findNodeHandle');
 var Platform = require('../../apis/Platform');
 var React = require('react');
 // var Subscribable = require('../Subscribable');

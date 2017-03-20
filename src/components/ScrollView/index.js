@@ -7,7 +7,7 @@
  */
 
 import dismissKeyboard from '../../modules/dismissKeyboard';
-import findNodeHandle from '../../modules/findNodeHandle';
+import findNodeHandle from 'react/lib/findNodeHandle';
 import invariant from 'fbjs/lib/invariant';
 import ScrollResponder from '../../modules/ScrollResponder';
 import ScrollViewBase from './ScrollViewBase';

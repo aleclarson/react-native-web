@@ -6,7 +6,7 @@ import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import NativeMethodsMixin from '../../modules/NativeMethodsMixin';
 import createDOMElement from '../../modules/createDOMElement';
-import findNodeHandle from '../../modules/findNodeHandle';
+import findNodeHandle from 'react/lib/findNodeHandle';
 import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import TextInputStylePropTypes from './TextInputStylePropTypes';

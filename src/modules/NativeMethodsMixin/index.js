@@ -6,7 +6,7 @@
  * @flow
  */
 
-import findNodeHandle from '../findNodeHandle';
+import findNodeHandle from 'react/lib/findNodeHandle';
 import StyleRegistry from '../../apis/StyleSheet/registry';
 import UIManager from '../../apis/UIManager';
 
