@@ -15,3 +15,6 @@ require('react-dom/lib/ReactDOM');
 // Prepare the `ResponderEventPlugin` module.
 require('../injectResponderEventPlugin');
 
+// Prepare the `Animated` package.
+var inject = require('Animated/inject');
+inject('InteractionManager', require('../../apis/InteractionManager'));
