@@ -38,16 +38,14 @@ function normalizeTouchEvent(nativeEvent) {
   const event = {
     _normalized: true,
     changedTouches,
+    touches,
     pageX: nativeEvent.pageX,
     pageY: nativeEvent.pageY,
-    preventDefault: nativeEvent.preventDefault.bind(nativeEvent),
-    stopImmediatePropagation: nativeEvent.stopImmediatePropagation.bind(nativeEvent),
-    stopPropagation: nativeEvent.stopPropagation.bind(nativeEvent),
     target: nativeEvent.target,
-    // normalize the timestamp
-    // https://stackoverflow.com/questions/26177087/ios-8-mobile-safari-wrong-timestamp-on-touch-events
-    timestamp: Date.now(),
-    touches
+    timestamp: Date.now(), // normalize the timestamp - https://goo.gl/gUiJjW
+    preventDefault: nativeEvent.preventDefault.bind(nativeEvent),
+    stopPropagation: nativeEvent.stopPropagation.bind(nativeEvent),
+    stopImmediatePropagation: nativeEvent.stopImmediatePropagation.bind(nativeEvent),
   };
 
   if (changedTouches[0]) {
