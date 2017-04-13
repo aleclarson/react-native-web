@@ -7,7 +7,6 @@
  * @flow
  */
 
-import debounce from 'debounce';
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import invariant from 'fbjs/lib/invariant';
 
@@ -39,6 +38,6 @@ class Dimensions {
 }
 
 Dimensions.set();
-ExecutionEnvironment.canUseDOM && window.addEventListener('resize', debounce(Dimensions.set, 50));
+ExecutionEnvironment.canUseDOM && window.addEventListener('resize', Dimensions.set);
 
 module.exports = Dimensions;
