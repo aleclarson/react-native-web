@@ -25,12 +25,15 @@ const pointerEvents = {
   none: createClassName('pointerEvents', 'none')
 };
 
-const pointerEventsCss = `.${pointerEvents.auto}{pointer-events:auto;}\n` +
+const pointerEventsCss =
+  `.${pointerEvents.auto}{pointer-events:auto;}\n` +
+  `.${pointerEvents.auto} *{pointer-events:auto;}\n` +
   `.${pointerEvents.boxNone}{pointer-events:none;}\n` +
   `.${pointerEvents.boxNone} *{pointer-events:auto;}\n` +
   `.${pointerEvents.boxOnly}{pointer-events:auto;}\n` +
   `.${pointerEvents.boxOnly} *{pointer-events:none;}\n` +
-  `.${pointerEvents.none}{pointer-events:none;}`;
+  `.${pointerEvents.none}{pointer-events:none;}\n` +
+  `.${pointerEvents.none} *{pointer-events:none;}`;
 
 class StyleManager {
   constructor() {
