@@ -35,6 +35,8 @@ ResponderEventPlugin.eventTypes.selectionChangeShouldSetResponder.dependencies =
 ];
 ResponderEventPlugin.eventTypes.scrollShouldSetResponder.dependencies = [topScroll];
 ResponderEventPlugin.eventTypes.startShouldSetResponder.dependencies = startDependencies;
+ResponderEventPlugin.eventTypes.gestureStart.dependencies = [];
+ResponderEventPlugin.eventTypes.gestureEnd.dependencies = [];
 
 let lastTime = 0;
 let isTouching = false;
