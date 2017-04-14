@@ -2,7 +2,7 @@
  * @providesModule UIManager
  */
 
-import asap from 'asap';
+import immediate from 'immediate';
 import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
 
 const getRect = node => {
@@ -19,7 +19,7 @@ const getRect = node => {
 };
 
 const measureLayout = (node, relativeToNativeNode, callback) => {
-  asap(() => {
+  immediate(() => {
     const relativeNode = relativeToNativeNode || node.parentNode;
     const relativeRect = getRect(relativeNode);
     const { height, left, top, width } = getRect(node);

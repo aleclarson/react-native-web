@@ -24,12 +24,12 @@
   "dependencies": {
     "Animated": "aleclarson/Animated#3.6.0",
     "array-find-index": "^1.0.2",
-    "asap": "^2.0.5",
     "babel-runtime": "^6.23.0",
     "debounce": "^1.0.0",
     "deep-assign": "^2.0.0",
     "fbjs": "^0.8.8",
     "hyphenate-style-name": "^1.0.2",
+    "immediate": "aleclarson/immediate#1.1.0",
     "inline-style-prefixer": "^3.0.0",
     "normalize-css-color": "^1.0.2",
     "react-dom": "~15.4.1",

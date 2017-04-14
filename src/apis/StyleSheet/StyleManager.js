@@ -1,4 +1,4 @@
-import asap from 'asap';
+import immediate from 'immediate';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import generateCss from './generateCss';
 import hash from './hash';
@@ -114,7 +114,7 @@ class StyleManager {
       className = createClassName(prop, value);
       this._addToCache(className, prop, value);
       if (canUseDOM) {
-        asap(() => {
+        immediate(() => {
           const sheet = this.mainSheet.sheet;
           // avoid injecting if the rule already exists (e.g., server rendered, hot reload)
           if (this.mainSheet.textContent.indexOf(className) === -1) {
