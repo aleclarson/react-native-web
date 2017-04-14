@@ -1,42 +1,34 @@
-// based on https://github.com/facebook/react/pull/4303/files
 
 import EventPluginRegistry from 'react-dom/lib/EventPluginRegistry';
-import normalizeNativeEvent from './normalizeNativeEvent';
 import ResponderEventPlugin from 'react-dom/lib/ResponderEventPlugin';
+import normalizeNativeEvent from './normalizeNativeEvent';
 
-const topMouseDown = 'topMouseDown';
-const topMouseMove = 'topMouseMove';
-const topMouseUp = 'topMouseUp';
-const topScroll = 'topScroll';
-const topSelectionChange = 'topSelectionChange';
-const topTouchCancel = 'topTouchCancel';
-const topTouchEnd = 'topTouchEnd';
-const topTouchMove = 'topTouchMove';
-const topTouchStart = 'topTouchStart';
+const startDependencies = ['topTouchStart', 'topMouseDown'];
+const moveDependencies = ['topTouchMove', 'topMouseMove'];
+const endDependencies = ['topTouchCancel', 'topTouchEnd', 'topMouseUp'];
 
-const endDependencies = [topTouchCancel, topTouchEnd, topMouseUp];
-const moveDependencies = [topTouchMove, topMouseMove];
-const startDependencies = [topTouchStart, topMouseDown];
+const eventDependencies = {
+  scrollShouldSetResponder: ['topScroll'],
+  selectionChangeShouldSetResponder: ['topSelectionChange'],
+  startShouldSetResponder: startDependencies,
+  moveShouldSetResponder: moveDependencies,
+  gestureStart: [],
+  responderReject: [],
+  responderGrant: [],
+  responderStart: startDependencies,
+  responderMove: moveDependencies,
+  responderEnd: endDependencies,
+  responderRelease: endDependencies,
+  responderTerminationRequest: [],
+  responderTerminate: [],
+  gestureEnd: [],
+};
 
-/**
- * Setup ResponderEventPlugin dependencies
- */
-ResponderEventPlugin.eventTypes.responderMove.dependencies = moveDependencies;
-ResponderEventPlugin.eventTypes.responderEnd.dependencies = endDependencies;
-ResponderEventPlugin.eventTypes.responderStart.dependencies = startDependencies;
-ResponderEventPlugin.eventTypes.responderRelease.dependencies = endDependencies;
-ResponderEventPlugin.eventTypes.responderTerminationRequest.dependencies = [];
-ResponderEventPlugin.eventTypes.responderGrant.dependencies = [];
-ResponderEventPlugin.eventTypes.responderReject.dependencies = [];
-ResponderEventPlugin.eventTypes.responderTerminate.dependencies = [];
-ResponderEventPlugin.eventTypes.moveShouldSetResponder.dependencies = moveDependencies;
-ResponderEventPlugin.eventTypes.selectionChangeShouldSetResponder.dependencies = [
-  topSelectionChange
-];
-ResponderEventPlugin.eventTypes.scrollShouldSetResponder.dependencies = [topScroll];
-ResponderEventPlugin.eventTypes.startShouldSetResponder.dependencies = startDependencies;
-ResponderEventPlugin.eventTypes.gestureStart.dependencies = [];
-ResponderEventPlugin.eventTypes.gestureEnd.dependencies = [];
+// Setup `ResponderEventPlugin` dependencies
+for (let eventType in eventDependencies) {
+  const eventConfig = ResponderEventPlugin.eventTypes[eventType];
+  eventConfig.dependencies = eventDependencies[eventType];
+}
 
 let lastTime = 0;
 let isTouching = false;
