@@ -58,19 +58,20 @@ describe('apis/StyleSheet/StyleRegistry', () => {
     });
   });
 
-  test('resolveStateful', () => {
-    // generate a classList to act as pre-existing DOM state
-    const mockStyle = styleRegistry.register({
-      borderWidth: 0,
-      borderColor: 'red',
-      width: 100
-    });
-    const { classList: domClassList } = styleRegistry.resolve(mockStyle);
-    domClassList.unshift('external-className');
-    expect(domClassList).toMatchSnapshot();
-
-    // test result
-    const result = styleRegistry.resolveStateful({ borderWidth: 1, opacity: 1 }, domClassList);
-    expect(result).toMatchSnapshot();
-  });
+  // TODO: Replace with `updateNativeProps` test.
+  // test('resolveStateful', () => {
+  //   // generate a classList to act as pre-existing DOM state
+  //   const mockStyle = styleRegistry.register({
+  //     borderWidth: 0,
+  //     borderColor: 'red',
+  //     width: 100
+  //   });
+  //   const { classList: domClassList } = styleRegistry.resolve(mockStyle);
+  //   domClassList.unshift('external-className');
+  //   expect(domClassList).toMatchSnapshot();
+  //
+  //   // test result
+  //   const result = styleRegistry.resolveStateful({ borderWidth: 1, opacity: 1 }, domClassList);
+  //   expect(result).toMatchSnapshot();
+  // });
 });
