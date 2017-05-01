@@ -99,19 +99,4 @@ const pointerEventStyles = StyleSheet.create({
   }
 });
 
-applyNativeMethods(View);
-
-const setNativeProps = View.prototype.setNativeProps;
-View.prototype.setNativeProps = function(nativeProps) {
-  const {pointerEvents} = nativeProps;
-  if (pointerEvents) {
-    delete nativeProps.pointerEvents;
-    nativeProps.style = [
-      nativeProps.style,
-      pointerEventStyles[pointerEvents],
-    ];
-  }
-  setNativeProps.call(this, nativeProps);
-};
-
-module.exports = applyLayout(View);
+module.exports = applyLayout(applyNativeMethods(View));

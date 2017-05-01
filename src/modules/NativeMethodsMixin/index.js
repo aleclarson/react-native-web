@@ -66,14 +66,9 @@ const NativeMethodsMixin = {
    * the initial styles from the DOM node and merge them with incoming props.
    */
   setNativeProps(nativeProps: Object) {
-    // DOM state
     const node = findNodeHandle(this);
-    const classList = [...node.classList];
-
-    const { className, style } = StyleRegistry.resolveStateful(nativeProps.style, classList);
-    const props = { ...nativeProps, className, style };
-
-    UIManager.updateView(node, props, this);
+    StyleRegistry.updateNativeProps(nativeProps, node.classList);
+    UIManager.updateView(node, nativeProps, this);
   }
 };
 

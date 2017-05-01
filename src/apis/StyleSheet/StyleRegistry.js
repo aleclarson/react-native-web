@@ -18,6 +18,9 @@ const createCacheKey = id => {
 
 const classListToString = list => list.join(' ').trim();
 
+// Used on `DOMTokenList` instances.
+const forEach = Function.call.bind(Array.prototype.forEach);
+
 class StyleRegistry {
   constructor() {
     this.cache = {};
@@ -80,38 +83,55 @@ class StyleRegistry {
   }
 
   /**
-   * Resolves a React Native style object to DOM attributes, accounting for
-   * the existing styles applied to the DOM node
+   * Updates a `DOMTokenList` using style props which have
+   * a corresponding class name. The remaining props replace the
+   * value of `nativeProps.style` to be applied as inline styles.
    */
-  resolveStateful(reactNativeStyle, domClassList) {
-    const previousReactNativeStyle = {};
-    const preservedClassNames = [];
+  updateNativeProps(nativeProps, classList) {
+    let { style, pointerEvents } = nativeProps;
 
-    // Convert the existing classList to a React Native style and preserve any
-    // unrecognized classNames.
-    domClassList.forEach(className => {
-      const { prop, value } = this.styleManager.getDeclaration(className);
-      if (prop) {
-        previousReactNativeStyle[prop] = value;
-      } else {
-        preservedClassNames.push(className);
+    if (pointerEvents) {
+      style || (style = {});
+      style.pointerEvents = pointerEvents;
+      delete nativeProps.pointerEvents;
+    }
+
+    if (style == null) {
+      return;
+    }
+    if (style.constructor !== Object) {
+      throw TypeError('Expected `nativeProps.style` to be an Object!');
+    }
+
+    const classNamesByProp = {};
+    forEach(classList, (className) => {
+      const { prop } = this.styleManager.getDeclaration(className);
+      prop && (classNamesByProp[prop] = className);
+    });
+
+    const inlineStyle = {};
+    style = createReactDOMStyle(style);
+    Object.keys(style).forEach(prop => {
+      const value = style[prop];
+      if (value != null) {
+        const className = this.styleManager.getClassName(prop, value);
+        if (className) {
+          const prevClassName = classNamesByProp[prop];
+          if (!prevClassName) {
+            classList.add(className);
+          }
+          else if (className !== prevClassName) {
+            classList.remove(prevClassName);
+            classList.add(className);
+          }
+          inlineStyle[prop] = null;
+        } else {
+          inlineStyle[prop] = value;
+        }
       }
     });
 
-    // Resolve the two React Native styles.
-    const { classList, style = {} } = this.resolve([previousReactNativeStyle, reactNativeStyle]);
-
-    // Because this is used in stateful operations we need to remove any
-    // existing inline styles that would override the classNames.
-    classList.forEach(className => {
-      const { prop } = this.styleManager.getDeclaration(className);
-      style[prop] = null;
-    });
-
-    classList.push(preservedClassNames);
-
-    const className = classListToString(classList);
-    return { className, style };
+    nativeProps.style = prefixInlineStyles(inlineStyle);
   }
 
   /**
