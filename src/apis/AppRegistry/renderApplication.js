@@ -8,7 +8,6 @@
 
 import invariant from 'fbjs/lib/invariant';
 import { render } from 'react-dom/lib/ReactMount';
-import ReactNativeApp from './ReactNativeApp';
 import StyleSheet from '../../apis/StyleSheet';
 import React, { Component } from 'react';
 
@@ -19,14 +18,12 @@ export default function renderApplication(
 ) {
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
-  const component = (
-    <ReactNativeApp initialProps={initialProps} rootComponent={RootComponent} rootTag={rootTag} />
-  );
+  const component = <RootComponent {...initialProps} rootTag={rootTag} />;
   render(component, rootTag);
 }
 
 export function getApplication(RootComponent: Component, initialProps: Object): Object {
-  const element = <ReactNativeApp initialProps={initialProps} rootComponent={RootComponent} />;
+  const element = React.createElement(RootComponent, initialProps);
   const stylesheet = StyleSheet.renderToString();
   return { element, stylesheet };
 }

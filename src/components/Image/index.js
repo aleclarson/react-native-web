@@ -146,7 +146,7 @@ class Image extends Component {
     const hiddenImage = displayImage
       ? createDOMElement('img', {
           src: displayImage,
-          style: [StyleSheet.absoluteFill, styles.img]
+          style: styles.img,
         })
       : null;
 
@@ -247,7 +247,6 @@ const styles = StyleSheet.create({
     zIndex: 0
   },
   img: {
-    height: '100%',
     opacity: 0,
     width: '100%',
     zIndex: -1

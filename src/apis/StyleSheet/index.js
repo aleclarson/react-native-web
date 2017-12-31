@@ -1,3 +1,7 @@
+/**
+ * @providesModule StyleSheet
+ */
+
 import flattenStyle from './flattenStyle';
 import StyleRegistry from './registry';
 

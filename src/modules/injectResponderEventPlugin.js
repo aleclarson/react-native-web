@@ -38,9 +38,13 @@ const originalExtractEvents = ResponderEventPlugin.extractEvents;
 ResponderEventPlugin.extractEvents = function(topLevelType, targetInst, nativeEvent) {
   nativeEvent = normalizeNativeEvent(nativeEvent);
 
-  // TODO: Ensure no errors are thrown when the event target is the `<html>` element.
-  if (nativeEvent.target.nodeName === 'HTML') {
-    console.warn('Events targeting the <html> element are not yet supported.');
+  // Only extract touch events.
+  if (!nativeEvent.touches) {
+    return null;
+  }
+
+  // Ignore events without a target.
+  if (targetInst == null) {
     return null;
   }
 

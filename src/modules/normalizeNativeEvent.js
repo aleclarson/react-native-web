@@ -31,6 +31,13 @@ const normalizeTouches = (touches = emptyArray) =>
     };
   });
 
+let scrollY = window.scrollY;
+window.addEventListener('scroll', () => {
+  if (window.scrollY !== 0) {
+    scrollY = window.scrollY;
+  }
+});
+
 function normalizeTouchEvent(nativeEvent) {
   const changedTouches = normalizeTouches(nativeEvent.changedTouches);
   const touches = normalizeTouches(nativeEvent.touches);
@@ -39,22 +46,12 @@ function normalizeTouchEvent(nativeEvent) {
     _normalized: true,
     changedTouches,
     touches,
-    pageX: nativeEvent.pageX,
-    pageY: nativeEvent.pageY,
     target: nativeEvent.target,
     timestamp: Date.now(), // normalize the timestamp - https://goo.gl/gUiJjW
     preventDefault: nativeEvent.preventDefault.bind(nativeEvent),
     stopPropagation: nativeEvent.stopPropagation.bind(nativeEvent),
     stopImmediatePropagation: nativeEvent.stopImmediatePropagation.bind(nativeEvent),
   };
-
-  if (changedTouches[0]) {
-    event.identifier = changedTouches[0].identifier;
-    event.pageX = changedTouches[0].pageX;
-    event.pageY = changedTouches[0].pageY;
-    event.locationX = changedTouches[0].locationX;
-    event.locationY = changedTouches[0].locationY;
-  }
 
   return event;
 }
@@ -98,9 +95,13 @@ function normalizeNativeEvent(nativeEvent) {
   if (nativeEvent._normalized) {
     return nativeEvent;
   }
-  const eventType = nativeEvent.type || '';
-  const mouse = eventType.indexOf('mouse') >= 0;
-  return mouse ? normalizeMouseEvent(nativeEvent) : normalizeTouchEvent(nativeEvent);
+  if (nativeEvent.touches) {
+    const eventType = nativeEvent.type || '';
+    const mouse = eventType.indexOf('mouse') >= 0;
+    return mouse ? normalizeMouseEvent(nativeEvent) : normalizeTouchEvent(nativeEvent);
+  }
+  nativeEvent._normalized = true;
+  return nativeEvent;
 }
 
 module.exports = normalizeNativeEvent;
